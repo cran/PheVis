@@ -1,0 +1,178 @@
+---
+title: "Tuto PheVis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{TutoPheVis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+Welcome to PheVis package, an unsupervised R package for phenotyping at visit resolution. I will briefly explain how it works, for more details about the underlying method. The detailed method is available on MedRxiv (doi: <https://doi.org/10.1101/2020.06.15.20131458>)
+
+## Toy dataset
+
+First we need a toy dataset, luckily, there is one provided inside the package. Here are the first rows and columns of the dataset.
+
+```{r message=FALSE}
+library(PheVis)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+
+data("data_phevis")
+
+kable(head(data_phevis[,1:7]))
+```
+
+We are going to split it in train and test set, add an `ENCOUNTER_NUM` column (one identifier by visit) and convert date to numeric format.
+
+```{r}
+df <- data_phevis %>%
+  mutate(ENCOUNTER_NUM = row_number(),
+         time = round(as.numeric(time)))
+
+set.seed(1)
+
+trainsize <- 0.8*length(unique(df$subject))
+trainid <- sample(x = unique(df$subject), size = trainsize)
+testid <- unique(df$subject)[!unique(df$subject) %in% trainid]
+
+df_train <- as.data.frame(df[df$subject %in% trainid,])
+df_test <- as.data.frame(df[df$subject %in% testid,])
+```
+
+## Train PheVis
+
+To train PheVis we first should set the parameters that are used by the algorithm:
+
+- The variables used for the prediction `var_vec`
+- The main surrogates highly predictive of the phenotype of interest: `main_icd` and `main_cui`
+- The gold-standard variable used only to evaluate the performance of PheVis (i.e not needed for model training): `GS`
+- The half_life of the cumulative decay, you can use the disease duration. Here we consider a chronic disease: `half_life`
+
+```{r}
+var_vec <- c(paste0("var",1:10), "mainCUI", "mainICD")
+main_icd <- "mainICD"
+main_cui <- "mainCUI"
+GS <- "PR_state"
+half_life <- Inf
+```
+
+Now we train the model, it might take a while.
+
+```{r}
+train_model <- PheVis::train_phevis(half_life = half_life,
+                                    df = df_train,
+                                    START_DATE = "time",
+                                    PATIENT_NUM = "subject",
+                                    ENCOUNTER_NUM = "ENCOUNTER_NUM",
+                                    var_vec = var_vec,
+                                    main_icd = main_icd,
+                                    main_cui = main_cui)
+```
+
+## Test PheVis
+
+Now that we have trained the model, we are going to use it to get probabilities prediction for the test set. It also takes a while as the cumulated variables must be computed for the test dataset too.
+
+```{r}
+test_model <- PheVis::test_phevis(train_param = train_model$train_param,
+                                  df_test = df_test,
+                                  START_DATE = "time",
+                                  PATIENT_NUM = "subject",
+                                  ENCOUNTER_NUM = "ENCOUNTER_NUM",
+                                  surparam = train_model$surparam,
+                                  model = train_model$model)
+```
+
+## Results
+
+### train_model
+
+We can access the different components of the returned objects. `train_model` is a list containing multiples objects. We have `surparam`, the parameters computed inside PheVis to compute the surrogate (mean and sd of main surrogates).
+
+```{r}
+train_model$surparam
+```
+
+`model` which contains the fixed effect of the model and the type of model trained (usually glmer for mixed effect logistic regression but might be glm for logistic regression if mixed model fails to converge).
+
+```{r}
+train_model$model
+```
+
+`df_train_result` the data.frame with the surrogates (qualitative and quantitative), the output probability and the visit id.
+
+```{r}
+head(train_model$df_train_result)
+```
+
+`train_param` corresponds to the hyperparameters of PheVis chosen by the user.
+
+```{r}
+train_model$train_param
+```
+
+`df_x_train` is the final data.frame to predict the probability with the cumulated features.
+
+```{r}
+head(train_model$df_x_train[,c(1:2, 14:15, 29:30)])
+```
+
+### test_model
+
+`test_model` is also a list containing two data.frame. We have `df_result` with the predictions of the model.
+
+```{r}
+head(test_model$df_result)
+```
+
+And `df_pred` the data.frame with the model predictions.
+
+```{r}
+head(test_model$df_pred[,c(1:2, 14:15, 29:30)])
+```
+
+### plot predictions
+
+We can display a graph with the prediction and the gold-standard with the function `ggindividual_plot`.
+
+```{r}
+df_plot <- test_model$df_result %>%
+  left_join(df_test) %>%
+  filter(PATIENT_NUM %in% c(18, 23, 26, 32))
+
+PheVis::ggindividual_plot(subject = df_plot$PATIENT_NUM,
+                          time = df_plot$START_DATE,
+                          gold_standard = df_plot$PR_state,
+                          prediction = df_plot$PREDICTION)
+```
+
+### Performances
+
+Now we can see the performance of the model using ROC cure and Precision Recall (PR) curve
+
+```{r fig.width=6}
+pr_curve <-PRROC::pr.curve(scores.class0 = test_model$df_result$PREDICTION,
+                           weights.class0 = df_test$PR_state,
+                           curve = TRUE)
+
+plot(pr_curve)
+```
+
+```{r fig.width=6}
+roc_curve <- PRROC::roc.curve(scores.class0 = test_model$df_result$PREDICTION,
+                              weights.class0 = df_test$PR_state,
+                              curve = TRUE)
+plot(roc_curve)
+```
+
