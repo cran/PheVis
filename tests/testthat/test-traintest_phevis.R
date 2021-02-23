@@ -46,6 +46,11 @@ test_that("test all pipeline is working", {
 
         check_value <- data_perf - c(pr_curve$auc.integral, roc_curve$auc)
         
-        expect_equal(check_value[1], 0)
-        expect_equal(check_value[2], 0)
+        ## tolerance
+        eps <- if (capabilities("long.double"))
+                sqrt(.Machine$double.eps) else
+                        0.01
+        
+        expect_equal(check_value[1], 0, tolerance = eps)
+        expect_equal(check_value[2], 0, tolerance = eps)
 })
