@@ -1,7 +1,7 @@
-f0d113611062c13609ec5af7c317d560 *DESCRIPTION
+1f4578d1030dba1f32c2d5cc1721c6fd *DESCRIPTION
 e68812b5e168adf02577ecc23e8402e6 *NAMESPACE
-0c1249fec86dd6c717165e27d89ec2cb *NEWS.md
-b8966b2bcef87d7e13aad98af9cbe124 *R/PheVis.R
+5f2fd179c6bb5f8ce5f24c0f3921e343 *NEWS.md
+2bcffbc7ff9302175f8d4485d45a2ba7 *R/PheVis-package.R
 9a185529fcb9dab94f9516d7f6031c8d *R/RcppExports.R
 6e2b41bdc10a75fa8ed9c855cb9f12f7 *R/boot_df.R
 af959447392e47777e4ebfbd5af194e6 *R/build_qantsur.R
@@ -27,13 +27,14 @@ bd7e0f8154502b5bdd64f5feee112587 *R/sur_exp_smooth.R
 d8d66bacfa6ae6dc700b1ab328f3c58c *R/test_phevis.R
 3957e6547593960ec8a9589ad7b984a0 *R/train_phevis.R
 99c2efc05ca9686be748fe30bdb3983e *README.md
-62735e10ea5d8099188fc1a956eb1a01 *build/vignette.rds
+ea124a494ad7922985532ad3b308e4d5 *build/partial.rdb
+aa6d0f2eeaea205a7115052187b2afd2 *build/vignette.rds
 a59f3db87310d4e122975566e04b7045 *data/data_perf.rdata
 9ec035ab3950b5ec07db053233673005 *data/data_phevis.rdata
 9973b5b439c38013a774ffe2b237c495 *inst/doc/TutoPheVis.R
 59f8c57fae6693f6a7ffbbcbf34e9f97 *inst/doc/TutoPheVis.Rmd
-1b31cf421f2c90e92d46c4880daaa2f2 *inst/doc/TutoPheVis.html
-ec81567f308cc082684291ca1f7525cb *man/PheVis.Rd
+e913482d1fb2aac295b85965bff588dc *inst/doc/TutoPheVis.html
+1e214ce57b3a19399917cea49bdb62c5 *man/PheVis-package.Rd
 703e16ddef3dd2285ff314688d881008 *man/boot_df.Rd
 514929fc2c9e8529d65ea160fc3a0333 *man/build_qantsur.Rd
 75427f45868cafc02ce5f2d8a145ce40 *man/build_quali.Rd
@@ -58,7 +59,7 @@ f74a39807929f6a668737a629e7f21a1 *man/pretty_cv.glmnet.Rd
 14d73641e0ec6c8700d0b9c0cf4c0784 *man/sur_exp_smooth.Rd
 d83c09dca68231d43510ab3d391dd18a *man/test_phevis.Rd
 039e6362f174200427ec42e3e28cf368 *man/train_phevis.Rd
-92ae4384f366053042186d516e5ab174 *src/RcppExports.cpp
+52bb1567d4d02824b96dccce72fd0efa *src/RcppExports.cpp
 d4e62f7087694e6fbf0257a8cb3d1669 *src/expcorrectC.cpp
 cb4257c098a3de80105f2b43749c5bab *tests/testthat.R
 2adc561b475b807e2d0a0f445b072e73 *tests/testthat/test-roll_time_sum.R
