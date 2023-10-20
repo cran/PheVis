@@ -1,3 +1,9 @@
+# PheVis 1.0.4
+
+Patch
+
+- Correct test failure by increasing tolerance.
+
 # PheVis 1.0.3
 
 Patch

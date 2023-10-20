@@ -2,8 +2,8 @@ Type: Package
 Package: PheVis
 Title: Automatic Phenotyping of Electronic Health Record at Visit
         Resolution
-Version: 1.0.3
-Date: 2023-09-21
+Version: 1.0.4
+Date: 2023-10-20
 Authors@R: 
     c(person(given = "Thomas",
              family = "Ferte",
@@ -25,9 +25,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2023-09-21 16:18:45 UTC; tf1
+Packaged: 2023-10-20 08:05:07 UTC; tf1
 Author: Thomas Ferte [aut, cre],
   Boris P. Hejblum [aut]
 Maintainer: Thomas Ferte <thomas.ferte@u-bordeaux.fr>
 Repository: CRAN
-Date/Publication: 2023-09-21 20:40:02 UTC
+Date/Publication: 2023-10-20 08:30:02 UTC

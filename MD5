@@ -1,6 +1,6 @@
-1f4578d1030dba1f32c2d5cc1721c6fd *DESCRIPTION
+f3813b6a52d71a4670b00c0228550a8a *DESCRIPTION
 e68812b5e168adf02577ecc23e8402e6 *NAMESPACE
-5f2fd179c6bb5f8ce5f24c0f3921e343 *NEWS.md
+99c5fd1c1835fef0d2162824dcbc2e21 *NEWS.md
 2bcffbc7ff9302175f8d4485d45a2ba7 *R/PheVis-package.R
 9a185529fcb9dab94f9516d7f6031c8d *R/RcppExports.R
 6e2b41bdc10a75fa8ed9c855cb9f12f7 *R/boot_df.R
@@ -63,5 +63,5 @@ d83c09dca68231d43510ab3d391dd18a *man/test_phevis.Rd
 d4e62f7087694e6fbf0257a8cb3d1669 *src/expcorrectC.cpp
 cb4257c098a3de80105f2b43749c5bab *tests/testthat.R
 2adc561b475b807e2d0a0f445b072e73 *tests/testthat/test-roll_time_sum.R
-a6cdeb564f4b328afdd9d099ce18afc9 *tests/testthat/test-traintest_phevis.R
+f029897ccc802af168d9b92270b952c5 *tests/testthat/test-traintest_phevis.R
 59f8c57fae6693f6a7ffbbcbf34e9f97 *vignettes/TutoPheVis.Rmd
