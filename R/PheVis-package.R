@@ -2,7 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @import Rcpp dplyr glmnet lme4 zoo purrr tidyr viridis knitr ggplot2
+#' @import Rcpp dplyr glmnet lme4 zoo tidyr viridis knitr ggplot2
 #' @importFrom randomForest randomForest
 #' @importFrom stats as.formula predict quantile sd coef
 #' @importFrom Rcpp evalCpp

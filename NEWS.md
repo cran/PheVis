@@ -1,3 +1,10 @@
+# PheVis 1.0.5
+
+Patch
+
+- Replace purrr::rbernoulli() (deprecated)
+
+
 # PheVis 1.0.4
 
 Patch

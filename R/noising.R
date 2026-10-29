@@ -10,7 +10,7 @@ noising <- function(X_boot, p = .3){
   ## get mean for each col
   column_mean <- colMeans(X_boot)
   ## get rows where noise is introduced
-  mat <- matrix(round(purrr::rbernoulli(n = prod(dim(X_boot)), p = p)),
+  mat <- matrix(round(stats::runif(prod(dim(X_boot))) < p),
                 ncol = ncol(X_boot))
   ## work on copy
   X_boot_noise <- X_boot
